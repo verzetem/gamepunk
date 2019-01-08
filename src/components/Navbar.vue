@@ -27,7 +27,7 @@
 					</form>
 				</div>
 				<div v-if="loggedIn" class="uk-navbar-item fl-r">
-					<span class="user-name">Name</span><span class="icon-name"><i class="fas fa-chevron-down"></i></span><div class="avatar" v-tooltip="'Edit Profile'"></div>
+					<span class="user-name">{{ user[0].username }}</span><span class="icon-name"><i class="fas fa-chevron-down"></i></span><div class="avatar" v-tooltip="'Edit Profile'"></div>
 				</div>
 				<div v-else class="uk-navbar-item fl-r">
 					<span class="user-name">Login</span><span class="icon-name"></span>
@@ -48,14 +48,15 @@ export default {
 
   	return {
   		user: [],
-  		loggedIn: false
+  		loggedIn: true
   	}
 
   },
   methods: {
 
   	randoFunc() {
-  		this.loggedIn = !this.loggedIn;
+  		// this.loggedIn = !this.loggedIn;
+  		console.log(this.user)
   	}
 
   },
@@ -63,8 +64,7 @@ export default {
     fetch('http://localhost:3030/users')
       .then(response => response.json())
       .then(response => {
-      	this.user = response
-      	console.log(this.user)
+      	this.user = response.users
       })
   }
 }
