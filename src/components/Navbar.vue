@@ -7,16 +7,24 @@
 
 				<ul class="uk-navbar-nav">
 					<li>
-						<router-link to="/" class="nav-link">Home</router-link>
+						<router-link to="/" class="nav-link">
+							Home
+						</router-link>
 					</li>
 					<li>
-						<router-link to="/favorites" class="nav-link">Favorites</router-link>
+						<router-link to="/favorites" class="nav-link">
+							Favorites
+						</router-link>
 					</li>
 					<li>
-						<router-link to="/about" class="nav-link">About</router-link>
+						<router-link to="/about" class="nav-link">
+							About
+						</router-link>
 					</li>
 					<li>
-						<router-link to="/contact" class="nav-link">Contact</router-link>
+						<router-link to="/contact" class="nav-link">
+							Contact
+						</router-link>
 					</li>
 				</ul>
 
@@ -27,10 +35,20 @@
 					</form>
 				</div>
 				<div v-if="loggedIn" class="uk-navbar-item fl-r">
-					<span class="user-name">{{ user[0].username }}</span><span class="icon-name"><i class="fas fa-chevron-down"></i></span><div class="avatar" v-tooltip="'Edit Profile'"></div>
+					<span class="user-name">verz <span class="icon-name"><i class="fas fa-chevron-down"></i></span></span>
+
+					
+					<div class="avatar" v-tooltip="'Edit Profile'">
+						<img src="http://avatarbox.net/avatars/img9/pokemon_face_avatar_picture_46051.jpg" alt=""/>
+					</div>
 				</div>
-				<div v-else class="uk-navbar-item fl-r">
-					<span class="user-name">Login</span><span class="icon-name"></span>
+				<div v-else class=" fl-r">
+					<div class="user-name">
+						<router-link to="/login" class="log-in">
+							LOG IN <i class="fas fa-sign-in-alt"></i>
+						</router-link>
+					</div>
+					<span class="icon-name"></span>
 				</div>
 
 			</div>
@@ -55,8 +73,7 @@ export default {
   methods: {
 
   	randoFunc() {
-  		// this.loggedIn = !this.loggedIn;
-  		console.log(this.user)
+  		this.loggedIn = !this.loggedIn
   	}
 
   },
@@ -87,23 +104,25 @@ export default {
 		background-color: rgba(0,0,0,0.3);
 		padding: 0.3%;
 		margin-top: 0.3%;
-		margin-right: 0.5%;
+		margin-right: 1.8%;
 	}
 	.user-name {
+		// margin-left: 20%;
 		color: #fff;
-		margin-right: 1%;
-		font-size: 2em;
+		font-size: 1.2em;
 		font-weight: bold;
+		width: 100%;
 	}
 	.icon-name {
 		color: rgb(0, 140, 123);
+		margin-right: 5%;
 	}
-	.avatar {
+	.avatar img {
 		float: right;
-		border: solid 1px rgb(0, 140, 123);
+		// border: solid 1px rgb(0, 140, 123);
 		border-radius: 10px;
 		width: 70px;
-		height: 70px;
+		height: auto;
 		margin-left: 1em;
 	}
 	.nav-link {
@@ -111,10 +130,13 @@ export default {
 		border-bottom: 5px solid rgba(255,255,255,0);
 		transition: all 0.4s !important;
 		margin: 0;
+		padding: 0;
+		color: #fff;
 		&:hover {
 			background-color: rgba(100,100,100,0.2) !important;
 			border-bottom: 5px solid rgb(0, 140, 123);
 			color: rgb(255,255,255) !important;
+			text-decoration: none;
 		}
 		&:focus {
 			background-color: rgba(100,100,100,0.2) !important;
@@ -122,14 +144,23 @@ export default {
 			color: rgb(255,255,255) !important;
 		}
 	}
+	.log-in {
+		margin-right: 1vw;
+		font-size: 0.7em;
+		color: rgb(255,255,255);
+		transition: all 0.3s;
+		&:hover {
+			color: rgb(0, 140, 123);
+			text-decoration: none;
+		}
+	}
 	.fl-r {
-		float: right !important;
+		// float: right !important;
 		margin-left: auto !important;
 	}
 	.logo1 {
 		margin: 0;
 		color: #FFF;
-		// font-weight: bold;
 	}
 	.logo2 {
 		margin: 0;
