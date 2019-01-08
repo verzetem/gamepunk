@@ -3,7 +3,7 @@
 		<nav class="uk-navbar-container uk-margin" uk-navbar>
 			<div class="uk-navbar-left">
 
-				<router-link to="/"  class="uk-navbar-item uk-logo"><h1 class="logo1">GAME<span class="logo2">PUNK</span></h1></router-link>
+				<router-link to="/"  class="uk-navbar-item uk-logo"><h1 class="logo1">GAME<span class="logo2"><i class="fas fa-gamepad"></i>PUNK</span></h1></router-link>
 
 				<ul class="uk-navbar-nav">
 					<li>
@@ -35,10 +35,19 @@
 					</form>
 				</div>
 				<div v-if="loggedIn" class="uk-navbar-item fl-r">
-					<span class="user-name">verz <span class="icon-name"><i class="fas fa-chevron-down"></i></span></span>
 
-					
-					<div class="avatar" v-tooltip="'Edit Profile'">
+					<div class="user-name dropdown">chris <span class="icon-name"><i class="fas fa-chevron-down"></i></span>
+						<ul class="drop-nav">
+							<li>
+								<router-link to="/profile" class="drop-link">Profile</router-link>
+							</li>
+							<li>
+								<router-link to="/logout" class="drop-link">Logout <i class="fas fa-sign-out-alt"></i></router-link>
+							</li>
+						</ul>
+					</div>
+
+					<div class="avatar">
 						<img src="http://avatarbox.net/avatars/img9/pokemon_face_avatar_picture_46051.jpg" alt=""/>
 					</div>
 				</div>
@@ -86,18 +95,48 @@ export default {
   }
 }
 
-
+// v-tooltip="'Edit Profile'"
 </script>
 
 <style lang="scss">
+	.dropdown {
+		position: relative;
+		transition: all 0.3s;
+	}
+	.drop-nav {
+		visibility: hidden;
+		position: absolute;
+		transition: all 0.3s;
+		text-align: center;
+		width: 100%;
+		right: 6%;
+		ul, li, a {
+			list-style: none;
+			color: rgb(255,255,255) !important;
+		}
+	}
+	.dropdown:hover > .drop-nav {
+		visibility: visible;
+		display: block;
+	}
+	.drop-link {
+		color: rgb(255,255,255);
+		font-size: 1.2em;
+		transition: all 0.3s;
+		border-bottom: 4px solid rgba(0,206,182,0);
+		&:hover {
+			border-bottom: 4px solid rgb(0, 206, 182);
+			text-decoration: none;
+		}
+	}
 	.uk-navbar-container {
 		background-color: rgba(0,5,2,0.4) !important;
 	}
 	.uk-button-danger {
-		background-color: rgb(0, 206, 182) !important;
+		background-color: rgb(0,206,182) !important;
 		transition: all 0.35s !important;
 		&:hover {
-			background-color: rgb(0, 140, 123) !important;
+			background-color: rgb(0,140,123) !important;
 		}
 	}
 	.tooltip {
@@ -114,12 +153,11 @@ export default {
 		width: 100%;
 	}
 	.icon-name {
-		color: rgb(0, 140, 123);
+		color: rgb(0,206,182);
 		margin-right: 5%;
 	}
 	.avatar img {
 		float: right;
-		// border: solid 1px rgb(0, 140, 123);
 		border-radius: 10px;
 		width: 70px;
 		height: auto;
@@ -134,23 +172,23 @@ export default {
 		color: #fff;
 		&:hover {
 			background-color: rgba(100,100,100,0.2) !important;
-			border-bottom: 5px solid rgb(0, 140, 123);
+			border-bottom: 5px solid rgb(0,206,182);
 			color: rgb(255,255,255) !important;
 			text-decoration: none;
 		}
 		&:focus {
 			background-color: rgba(100,100,100,0.2) !important;
-			border-bottom: 5px solid rgb(0, 140, 123);
+			border-bottom: 5px solid rgb(0,140,123);
 			color: rgb(255,255,255) !important;
 		}
 	}
 	.log-in {
 		margin-right: 1vw;
-		font-size: 0.7em;
+		font-size: 1.2em;
 		color: rgb(255,255,255);
 		transition: all 0.3s;
 		&:hover {
-			color: rgb(0, 140, 123);
+			color: rgb(0,206,182);
 			text-decoration: none;
 		}
 	}
@@ -165,6 +203,6 @@ export default {
 	.logo2 {
 		margin: 0;
 		font-weight: bold;
-		color: rgb(0, 140, 123);
+		color: rgb(0,206,182);
 	}
 </style>
