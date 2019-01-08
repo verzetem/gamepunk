@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Favorites Component</h1>
+    <h2>Favorites Component</h2>
     
   </div>
 </template>
