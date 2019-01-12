@@ -5,10 +5,6 @@ import store from './store'
 import '../node_modules/uikit/dist/css/uikit.min.css'
 import '../node_modules/@fortawesome/fontawesome-free/css/all.css'
 
-import VTooltip from 'v-tooltip'
- 
-Vue.use(VTooltip)
-
 
 Vue.config.productionTip = false
 

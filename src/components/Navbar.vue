@@ -31,35 +31,35 @@
 				<div class="uk-navbar-item">
 					<form action="javascript:void(0)">
 						<input class="uk-input uk-form-width-small" type="text" placeholder="Filter">
-						<button @click="randoFunc()" class="uk-button uk-button-danger">Submit</button>
+						<button class="uk-button uk-button-danger">Submit</button>
 					</form>
 				</div>
+
 				<div v-if="loggedIn" class="uk-navbar-item fl-r">
-
-					<div class="user-name dropdown">chris <span class="icon-name"><i class="fas fa-chevron-down"></i></span>
-						<ul class="drop-nav">
-							<li>
-								<router-link to="/profile" class="drop-link">Profile</router-link>
-							</li>
-							<li>
-								<router-link to="/logout" class="drop-link">Logout <i class="fas fa-sign-out-alt"></i></router-link>
-							</li>
-						</ul>
+					<div class="user-name dropdown">{{ user[0].username }} <span class="icon-name"><i class="fas fa-chevron-down"></i></span>
+							<ul class="drop-nav">
+								<li>
+									<router-link to="" class="drop-link">Profile</router-link>
+								</li>
+								<li>
+									<router-link @click="randoFunc" to="" class="drop-link"><span @click="randoFunc">Logout </span><i class="fas fa-sign-out-alt"></i></router-link>
+								</li>
+							</ul>
 					</div>
-
 					<div class="avatar">
 						<img src="http://avatarbox.net/avatars/img9/pokemon_face_avatar_picture_46051.jpg" alt=""/>
 					</div>
 				</div>
+
 				<div v-else class=" fl-r">
 					<div class="user-name">
-						<router-link to="/login" class="log-in">
-							LOG IN <i class="fas fa-sign-in-alt"></i>
+						<router-link to="" class="log-in">
+							<span @click="randoFunc">LOG IN </span><i class="fas fa-sign-in-alt"></i>
 						</router-link>
 					</div>
 					<span class="icon-name"></span>
 				</div>
-
+					
 			</div>
 		</nav>
 
@@ -67,7 +67,6 @@
 </template>
 
 <script>
-import VTooltip from 'v-tooltip'
 
 export default {
   name: 'Navbar',
@@ -75,16 +74,17 @@ export default {
 
   	return {
   		user: [],
-  		loggedIn: true
+  		loggedIn: false
   	}
 
   },
   methods: {
-
   	randoFunc() {
   		this.loggedIn = !this.loggedIn
+  	},
+  	testFunction() {
+  		console.log('articles state',this.articles)
   	}
-
   },
   mounted () {
     fetch('http://localhost:3030/users')
@@ -92,10 +92,9 @@ export default {
       .then(response => {
       	this.user = response.users
       })
+    }
   }
-}
 
-// v-tooltip="'Edit Profile'"
 </script>
 
 <style lang="scss">
@@ -125,7 +124,7 @@ export default {
 		transition: all 0.3s;
 		border-bottom: 4px solid rgba(0,206,182,0);
 		&:hover {
-			border-bottom: 4px solid rgb(0, 206, 182);
+			border-bottom: 4px solid rgb(0,206,182);
 			text-decoration: none;
 		}
 	}
@@ -138,12 +137,6 @@ export default {
 		&:hover {
 			background-color: rgb(0,140,123) !important;
 		}
-	}
-	.tooltip {
-		background-color: rgba(0,0,0,0.3);
-		padding: 0.3%;
-		margin-top: 0.3%;
-		margin-right: 1.8%;
 	}
 	.user-name {
 		// margin-left: 20%;
@@ -159,7 +152,7 @@ export default {
 	.avatar img {
 		float: right;
 		border-radius: 10px;
-		width: 70px;
+		width: 100px;
 		height: auto;
 		margin-left: 1em;
 	}
