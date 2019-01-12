@@ -5,8 +5,14 @@
 	  	<div class="inner">
 	  			<div v-for="article in articles" class="article-card">
 	  				<a v-bind:href="article.article_url">
-	  					<img v-bind:src="article.img_url" alt="">
-	  					<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">Placeholder Title</h6>
+	  					<!-- <div class="overlay">
+	  					</div>
+	  					<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">Placeholder Title</h6> -->
+	  					<div class="image-container">
+						    <img v-bind:src="article.img_url" />
+						    <div class="after"><h6 class="card-img-text">{{ (article) => cardTitle(article) }}</h6></div>
+						</div>
+						<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">Placeholder Title</h6>
 	  				</a>	  				
 	  			</div>
 
@@ -25,9 +31,11 @@ export default {
   },
   methods : {
 		cardTitle(article) {
-			console.log('article?',article);
-			return article.title.slice(0,30) + "..."
-
+			if (article.publisher_id == 1) {
+				return "Gamespot"
+			} else if (article.publisher_id == 2) {
+				 return "Kotaku"
+			}
 		}
   },
   mounted () {
@@ -57,9 +65,7 @@ export default {
 		flex-direction: row;
 		flex-wrap: wrap;
 		padding: 2% 6% 0 6%;
-		.card-title {
-			font-weight: bold;
-		}
+
 	}
 	.article-card {
 		height: 300px;
@@ -69,11 +75,47 @@ export default {
 		border-radius: 5px;
 		margin: auto;
 		margin-bottom: 1%;
+		a {
+			text-decoration: none;
+		}
+		.card-title {
+			font-weight: bold;
+		}
 		img {
 			width: 100%;
-			border-radius-top: 3px;
+			border-radius: 3px 3px 0 0;
 			border-bottom: 1px solid #000;
+			&:hover {
+				color: rgba(255,255,255,1)
+			}
 		}
+		.card-img-text {
+			position: absolute;
+			z-index: 100;
+			color: #FFF;
+			font-size: 24px;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+	}
+	.image-container {
+    position: relative;
+    margin-right: auto;
+    margin-left: auto;
+	}
+	.image-container .after {
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    width: 100%;
+	    height: 100%;
+	    display: none;
+	    color: #FFF;
+	}
+	.image-container:hover .after {
+	    display: block;
+	    background: rgba(0, 0, 0, .6);
 	}
 	.page-title {
 		margin: 0;
