@@ -87,7 +87,8 @@ export default {
   	}
   },
   mounted () {
-    fetch('http://localhost:3030/users')
+  	// http://localhost:3030/users
+    fetch('http://192.168.1.14:3030/users')
       .then(response => response.json())
       .then(response => {
       	this.user = response.users
@@ -98,104 +99,104 @@ export default {
 </script>
 
 <style lang="scss">
-	.dropdown {
-		position: relative;
-		transition: all 0.3s;
+.dropdown {
+	position: relative;
+	transition: all 0.3s;
+}
+.drop-nav {
+	visibility: hidden;
+	position: absolute;
+	transition: all 0.3s;
+	text-align: center;
+	width: 100%;
+	right: 6%;
+	ul, li, a {
+		list-style: none;
+		color: rgb(255,255,255) !important;
 	}
-	.drop-nav {
-		visibility: hidden;
-		position: absolute;
-		transition: all 0.3s;
-		text-align: center;
-		width: 100%;
-		right: 6%;
-		ul, li, a {
-			list-style: none;
-			color: rgb(255,255,255) !important;
-		}
+}
+.dropdown:hover > .drop-nav {
+	visibility: visible;
+	display: block;
+}
+.drop-link {
+	color: rgb(255,255,255);
+	font-size: 1.2em;
+	transition: all 0.3s;
+	border-bottom: 4px solid rgba(0,206,182,0);
+	&:hover {
+		border-bottom: 4px solid rgb(0,206,182);
+		text-decoration: none;
 	}
-	.dropdown:hover > .drop-nav {
-		visibility: visible;
-		display: block;
+}
+.uk-navbar-container {
+	background-color: rgba(0,5,2,0.4) !important;
+}
+.uk-button-danger {
+	background-color: rgb(0,206,182) !important;
+	transition: all 0.35s !important;
+	&:hover {
+		background-color: rgb(0,140,123) !important;
 	}
-	.drop-link {
-		color: rgb(255,255,255);
-		font-size: 1.2em;
-		transition: all 0.3s;
-		border-bottom: 4px solid rgba(0,206,182,0);
-		&:hover {
-			border-bottom: 4px solid rgb(0,206,182);
-			text-decoration: none;
-		}
+}
+.user-name {
+	// margin-left: 20%;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: bold;
+	width: 100%;
+}
+.icon-name {
+	color: rgb(0,206,182);
+	margin-right: 5%;
+}
+.avatar img {
+	float: right;
+	border-radius: 10px;
+	width: 100px;
+	height: auto;
+	margin-left: 1em;
+}
+.nav-link {
+	font-size: 1.5em !important;
+	border-bottom: 5px solid rgba(255,255,255,0);
+	transition: all 0.4s !important;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	&:hover {
+		background-color: rgba(100,100,100,0.2) !important;
+		border-bottom: 5px solid rgb(0,206,182);
+		color: rgb(255,255,255) !important;
+		text-decoration: none;
 	}
-	.uk-navbar-container {
-		background-color: rgba(0,5,2,0.4) !important;
+	&:focus {
+		background-color: rgba(100,100,100,0.2) !important;
+		border-bottom: 5px solid rgb(0,140,123);
+		color: rgb(255,255,255) !important;
 	}
-	.uk-button-danger {
-		background-color: rgb(0,206,182) !important;
-		transition: all 0.35s !important;
-		&:hover {
-			background-color: rgb(0,140,123) !important;
-		}
-	}
-	.user-name {
-		// margin-left: 20%;
-		color: #fff;
-		font-size: 1.2em;
-		font-weight: bold;
-		width: 100%;
-	}
-	.icon-name {
+}
+.log-in {
+	margin-right: 1vw;
+	font-size: 1.2em;
+	color: rgb(255,255,255);
+	transition: all 0.3s;
+	&:hover {
 		color: rgb(0,206,182);
-		margin-right: 5%;
+		text-decoration: none;
 	}
-	.avatar img {
-		float: right;
-		border-radius: 10px;
-		width: 100px;
-		height: auto;
-		margin-left: 1em;
-	}
-	.nav-link {
-		font-size: 1.5em !important;
-		border-bottom: 5px solid rgba(255,255,255,0);
-		transition: all 0.4s !important;
-		margin: 0;
-		padding: 0;
-		color: #fff;
-		&:hover {
-			background-color: rgba(100,100,100,0.2) !important;
-			border-bottom: 5px solid rgb(0,206,182);
-			color: rgb(255,255,255) !important;
-			text-decoration: none;
-		}
-		&:focus {
-			background-color: rgba(100,100,100,0.2) !important;
-			border-bottom: 5px solid rgb(0,140,123);
-			color: rgb(255,255,255) !important;
-		}
-	}
-	.log-in {
-		margin-right: 1vw;
-		font-size: 1.2em;
-		color: rgb(255,255,255);
-		transition: all 0.3s;
-		&:hover {
-			color: rgb(0,206,182);
-			text-decoration: none;
-		}
-	}
-	.fl-r {
-		// float: right !important;
-		margin-left: auto !important;
-	}
-	.logo1 {
-		margin: 0;
-		color: #FFF;
-	}
-	.logo2 {
-		margin: 0;
-		font-weight: bold;
-		color: rgb(0,206,182);
-	}
+}
+.fl-r {
+	// float: right !important;
+	margin-left: auto !important;
+}
+.logo1 {
+	margin: 0;
+	color: #FFF;
+}
+.logo2 {
+	margin: 0;
+	font-weight: bold;
+	color: rgb(0,206,182);
+}
 </style>

@@ -4,16 +4,15 @@
 	  <div class="content">
 	  	<div class="inner">
 	  			<div v-for="article in articles" class="article-card">
-	  				<a v-bind:href="article.article_url">
-	  					<!-- <div class="overlay">
-	  					</div>
-	  					<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">Placeholder Title</h6> -->
-	  					<div class="image-container">
-						    <img v-bind:src="article.img_url" />
-						    <div class="after"><h6 class="card-img-text">{{ (article) => cardTitle(article) }}</h6></div>
-						</div>
-						<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">Placeholder Title</h6>
-	  				</a>	  				
+	  				<div class="image-container">
+	  					<a v-bind:href="article.article_url" target="_blank">
+					    <img v-bind:src="article.img_url" />
+					    <div class="after"><h6 class="card-img-text">{{ article.publisher_id == 1 ? "Gamespot" : "Kotaku" }}</h6></div>
+							<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ article.title }}</h6>
+	  				</a>
+	  				</div>
+	  				
+	  				<i @click="favoritePut(article.id, article.favorited)" v-bind:class="getFavorited(article.favorited)" style="fontSize: 1.3em; marginTop: 3%;"></i>	  				
 	  			</div>
 
 	  	</div>
@@ -26,26 +25,47 @@ export default {
   name: 'Dashboard',
   data() {
   	return {
-  		articles: []
+  		articles: [],
+  		favorited: false
   	}
   },
   methods : {
-		cardTitle(article) {
-			if (article.publisher_id == 1) {
-				return "Gamespot"
-			} else if (article.publisher_id == 2) {
-				 return "Kotaku"
-			}
-		}
+  	getFavorited(fav) {
+  		if (fav === true) {
+  			return "fas fa-heart"
+  		} else {
+  			return "far fa-heart"
+  		}
+  	},
+  	favoritePut(id, fav) {
+  		// console.log("id and fav?", id,fav)
+  		const favArticle = fav
+  		console.log("favArticle", favArticle)
+  		fetch("http://localhost:3030/articles/" + id, {
+			headers: {
+				"Content-Type": "application/json"
+			},
+			method: "PUT",
+			body: JSON.stringify({
+				favorited: !favArticle
+			})
+		})
+			// .then(this.getArticles())
+  	},
+  	getArticles() {
+  		// http://localhost:3030/articles
+  		fetch('http://192.168.1.14:3030/articles')
+      .then(response => response.json())
+      .then(response => {
+      	this.articles = response.articles
+      	console.log(response.articles)
+      })
+  	}
+
   },
   mounted () {
   		console.log('mounted')
-  		fetch('http://localhost:3030/articles')
-      .then(response => response.json())
-      .then(response => {
-      	this.articles = response.favorites
-      	console.log(response.favorites)
-      })
+  		this.getArticles()
   	}
 }
 </script>
@@ -68,7 +88,7 @@ export default {
 
 	}
 	.article-card {
-		height: 300px;
+		height: 200px;
 		width: 200px;
 		background-color: rgba(0,206,182,0.1);
 		border: 2px solid #000;
@@ -80,6 +100,7 @@ export default {
 		}
 		.card-title {
 			font-weight: bold;
+			font-size: 1.2em;
 		}
 		img {
 			width: 100%;
@@ -90,13 +111,19 @@ export default {
 			}
 		}
 		.card-img-text {
-			position: absolute;
+			// position: absolute;
+			display: flex;
 			z-index: 100;
-			color: #FFF;
+			color: #FFF !important;
 			font-size: 24px;
-			margin-left: auto;
-			margin-right: auto;
-			text-align: center;
+			font-weight: bold;
+			align-content: center;
+			justify-content: center;
+			margin-top: 25%;
+			transition: all 0.3s;
+			&:hover {
+				color: rgb(0,206,182) !important;
+			}
 		}
 	}
 	.image-container {
@@ -109,13 +136,18 @@ export default {
 	    top: 0;
 	    left: 0;
 	    width: 100%;
-	    height: 100%;
+	    height: 115px;
 	    display: none;
 	    color: #FFF;
+	    text-align: center;
+	    margin-left: auto;
+	    margin-right: auto;
 	}
 	.image-container:hover .after {
 	    display: block;
-	    background: rgba(0, 0, 0, .6);
+	    background: rgba(0, 0, 0, 0.5);
+	    margin-left: auto;
+	    margin-right: auto;
 	}
 	.page-title {
 		margin: 0;
