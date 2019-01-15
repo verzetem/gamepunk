@@ -5,14 +5,13 @@
 	  	<div class="inner">
 	  			<div v-for="article in articles" class="article-card">
 	  				<div class="image-container">
-	  					<a v-bind:href="article.article_url" target="_blank">
+	  					<a :href="article.article_url" target="_blank">
 					    <img v-bind:src="article.img_url" />
 					    <div class="after"><h6 class="card-img-text">{{ article.publisher_id == 1 ? "Gamespot" : "Kotaku" }}</h6></div>
 							<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ article.title }}</h6>
 	  				</a>
-	  				</div>
-	  				
-	  				<i @click="favoritePut(article.id, article.favorited)" v-bind:class="getFavorited(article.favorited)" style="fontSize: 1.3em; marginTop: 3%;"></i>	  				
+	  				</div> 
+	  				<i @click="favoritePut(article.id, article.favorited)" :class="{ 'fas fa-heart': !article.favorited, 'far fa-heart': article.favorited }" style="fontSize: 1.3em; marginTop: 3%;"></i>	  				
 	  			</div>
 
 	  	</div>
@@ -47,14 +46,13 @@ export default {
 			},
 			method: "PUT",
 			body: JSON.stringify({
-				favorited: !favArticle
+				favorited: true
 			})
 		})
-			// .then(this.getArticles())
+			.then(this.getArticles())
   	},
   	getArticles() {
-  		// http://localhost:3030/articles
-  		fetch('http://192.168.1.14:3030/articles')
+  		fetch('http://localhost:3030/articles/')
       .then(response => response.json())
       .then(response => {
       	this.articles = response.articles
@@ -119,10 +117,11 @@ export default {
 			font-weight: bold;
 			align-content: center;
 			justify-content: center;
-			margin-top: 25%;
+			margin-top: 19%;
 			transition: all 0.3s;
 			&:hover {
 				color: rgb(0,206,182) !important;
+				margin-top:20%;
 			}
 		}
 	}
