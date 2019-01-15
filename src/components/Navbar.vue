@@ -31,7 +31,7 @@
 				<div class="uk-navbar-item">
 					<form action="javascript:void(0)">
 						<input class="uk-input uk-form-width-small" type="text" placeholder="Filter">
-						<button class="uk-button uk-button-danger">Submit</button>
+						<button class="uk-button uk-button-secondary">Submit</button>
 					</form>
 				</div>
 
@@ -155,9 +155,9 @@ export default {
 	}
 }
 .uk-navbar-container {
-	background-color: rgba(0,5,2,0.4) !important;
+	background-color: rgba(0,5,2,0.75) !important;
 }
-.uk-button-danger {
+.uk-button-secondary {
 	background-color: rgb(0,206,182) !important;
 	transition: all 0.35s !important;
 	&:hover {

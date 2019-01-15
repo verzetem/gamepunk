@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-tint">
   	<Navbar />
     <router-view/>
   </div>
@@ -22,8 +22,19 @@ body, html, h1, h2, h3, h4, h5, h6, p {
   color: #FFF !important;
 }
 body {
+  background-image: url('https://s3.envato.com/files/156884535/Game_Background_Emerald_Lake_4270x2135.jpg');
+  background-size: cover;
 	background-color: rgba(0,5,10,0.75);
-	height: 100vh
+	height: 100vh;
+}
+.bg-tint {
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.1);    
 }
 body, html {
 	overflow: hidden !important;
