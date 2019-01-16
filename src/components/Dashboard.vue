@@ -1,17 +1,23 @@
 <template>
 	<div>
-		<h2 class="page-title">Your Feed <i class="fas fa-sync-alt"></i></h2>
+		<h2 class="page-title"><span class="shadow">YOUR FEED </span><i @click="refreshArticles" class="fas fa-sync-alt"></i></h2>
+
 	  <div class="content">
+
 	  	<div class="inner">
 	  			<div v-for="article in articles" class="article-card">
 	  				<div class="image-container">
 	  					<a :href="article.article_url" target="_blank">
 					    <img v-bind:src="article.img_url" />
-					    <div class="after"><h6 class="card-img-text">{{ article.publisher_id == 1 ? "Gamespot" : "Kotaku" }}</h6></div>
-							<h6 class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ article.title }}</h6>
+					    <div class="after">
+					  	</div>
+					  	<!-- {{ article.publisher_id == 1 ? "Gamespot" : "Kotaku" }} -->
+					    <div class="after"><h6 class="card-img-text">{{ publisherName(article.publisher_id) }}</h6></div>
+							<span class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ articleTitle(article.title) }}</span>
 	  				</a>
 	  				</div> 
-	  				<i @click="favoritePut(article.id, article.favorited)" :class="{ 'fas fa-heart': !article.favorited, 'far fa-heart': article.favorited }" style="fontSize: 1.3em; marginTop: 3%;"></i>	  				
+	  				<i @click="favoritePut(article.id, article.favorited)" v-bind:class="{ 'fas fa-heart': article.favorited, 'far fa-heart': !article.favorited }" style="fontSize: 1.3em; marginTop: 3%;">{{article.favorited}}</i>
+	  				<div>{{ article.date_time }}</div>	  				
 	  			</div>
 
 	  	</div>
@@ -25,28 +31,39 @@ export default {
   data() {
   	return {
   		articles: [],
-  		favorited: false
+  		favorited: false,
   	}
   },
   methods : {
-  	getFavorited(fav) {
-  		if (fav === true) {
-  			return "fas fa-heart"
-  		} else {
-  			return "far fa-heart"
-  		}
+  	articleTitle(title) {
+			return title.slice(0,20) + "..."
   	},
-  	favoritePut(id, fav) {
+  	publisherName(id) {
+			if (id === 1) {
+				return "Destructoid"
+			} else if (id === 2) {
+				return "Kotaku"
+			} else if (id === 3) {
+				return "GameSpot"
+			}
+  	},
+  	refreshArticles() {
+			fetch("http://localhost:3030/articles/update", {
+			method: "GET"
+		})
+			setTimeout(this.getArticles(), 15000);
+  	},
+  	favoritePut(id, favorited) {
   		// console.log("id and fav?", id,fav)
-  		const favArticle = fav
-  		console.log("favArticle", favArticle)
+  		let favArticle = favorited
+  		console.log("favoritePut", favArticle)
   		fetch("http://localhost:3030/articles/" + id, {
 			headers: {
 				"Content-Type": "application/json"
 			},
 			method: "PUT",
 			body: JSON.stringify({
-				favorited: true
+				favorited: !favArticle
 			})
 		})
 			.then(this.getArticles())
@@ -56,7 +73,7 @@ export default {
       .then(response => response.json())
       .then(response => {
       	this.articles = response.articles
-      	console.log(response.articles)
+      	console.log("getArticles",response.articles)
       })
   	},
 
@@ -85,7 +102,6 @@ export default {
 		background-color: rgb(180,62,72)
 	}
 }
-
 .content {
 	overflow-y: auto !important;
 	margin: 2vh auto !important;
@@ -99,14 +115,14 @@ export default {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	padding: 2% 6% 0 6%;
-	background-color: rgba(0,0,0,0.4 );
+	padding: 1% 2% 0 2%;
+	background-color: rgba(0,0,0,0.6);
 
 }
 .article-card {
-	height: 200px;
-	width: 200px;
-	background-color: rgba(0,206,182,0.1);
+	height: 220px;
+	width: 220px;
+	background-color: rgba(0,206,182,0.2);
 	border: 2px solid #000;
 	border-radius: 5px;
 	margin: auto;
@@ -115,10 +131,13 @@ export default {
 		text-decoration: none;
 	}
 	.card-title {
-		font-weight: bold;
-		font-size: 1.2em;
+		color: #FFF;
+		// font-weight: bold;
+		font-size: 1em;
+		text-decoration: none;
 	}
 	img {
+		height: 115px;
 		width: 100%;
 		border-radius: 3px 3px 0 0;
 		border-bottom: 1px solid #000;
@@ -169,6 +188,12 @@ export default {
 .page-title {
 	margin: 0;
 	padding: 0;
+	
+}
+.shadow {
+	color: white;
+	text-shadow:  -2px 2px black;
+	font-weight: bold;
 }
 .invisible-text {
 	color: rgb(65,68,71) !important;

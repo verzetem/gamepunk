@@ -20,9 +20,10 @@ export default {
 body, html, h1, h2, h3, h4, h5, h6, p {
   font-family: 'Montserrat', sans-serif !important;
   color: #FFF !important;
+  text-align: center;
 }
 body {
-  background-image: url('https://s3.envato.com/files/156884535/Game_Background_Emerald_Lake_4270x2135.jpg');
+  background-image: url('https://i.stack.imgur.com/WUUJj.png');
   background-size: cover;
 	background-color: rgba(0,5,10,0.75);
 	height: 100vh;
@@ -34,7 +35,7 @@ body {
   position: absolute;
   top: 0px;
   left: 0px;
-  background: rgba(0, 0, 0, 0.1);    
+  background: rgba(0, 0, 0, 0.2);    
 }
 body, html {
 	overflow: hidden !important;

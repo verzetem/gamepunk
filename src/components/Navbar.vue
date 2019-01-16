@@ -21,21 +21,16 @@
 							<span @click="aboutStyle">About</span>
 						</router-link>
 					</li>
-					<li>
-						<router-link to="/contact" v-bind:class="{ 'nav-link-active': isContact, 'nav-link': !isContact }">
-							<span @click="contactStyle">Contact</span>
-						</router-link>
-					</li>
 				</ul>
 
-				<div class="uk-navbar-item">
+				<div class="uk-navbar-item fl-r">
 					<form action="javascript:void(0)">
 						<input class="uk-input uk-form-width-small" type="text" placeholder="Filter">
 						<button class="uk-button uk-button-secondary">Submit</button>
 					</form>
 				</div>
 
-				<div v-if="loggedIn" class="uk-navbar-item fl-r">
+				<!-- <div v-if="loggedIn" class="uk-navbar-item fl-r">
 					<div class="user-name dropdown">{{ user.username }} <span class="icon-name"><i class="fas fa-chevron-down"></i></span>
 							<ul class="drop-nav">
 								<li>
@@ -49,16 +44,16 @@
 					<div class="avatar">
 						<img src="http://avatarbox.net/avatars/img9/pokemon_face_avatar_picture_46051.jpg" alt=""/>
 					</div>
-				</div>
+				</div> -->
 
-				<div v-else class=" fl-r">
+				<!-- <div v-else class=" fl-r">
 					<div class="user-name">
 						<router-link to="" class="log-in">
 							<span @click="randoFunc">LOG IN </span><i class="fas fa-sign-in-alt"></i>
 						</router-link>
 					</div>
 					<span class="icon-name"></span>
-				</div>
+				</div> -->
 					
 			</div>
 		</nav>
@@ -85,10 +80,11 @@ export default {
   		this.loggedIn = !this.loggedIn
   	},
   	homeStyle() {
-			this.isHome = true
+  		this.isHome = true
 			this.isFav = false
 			this.isAbout = false
 			this.isContact = false
+
   	},
   	favStyle() {
   		this.isFav = true;
@@ -102,24 +98,37 @@ export default {
   		this.isFav = false
   		this.isContact = false
   	},
-  	contactStyle() {
-  		this.isContact = true
-  		this.isHome = false
-  		this.isAbout = false
-  		this.isFav = false
-  	},
 		fetchUser() {
 			fetch('http://localhost:3030/users/')
       .then(response => response.json())
       .then(response => {
       	this.user = response.users[0]
       })
-		}
-  },
-  mounted () {
-		this.fetchUser()
-    }
+		},
+		navsStylePersist() {
+			if (location.href === "http://localhost:8080/#/") {
+			this.isHome = true
+			this.isFav = false
+			this.isAbout = false
+			this.isContact = false
+		} else if (location.href === "http://localhost:8080/#/favorites") {
+			this.isFav = true
+  		this.isHome = false
+  		this.isAbout = false
+  		this.isContact = false
+		} else if (location.href === "http://localhost:8080/#/about") {
+			this.isAbout = true
+  		this.isHome = false
+  		this.isFav = false
+  		this.isContact = false
+  	}
   }
+},
+	mounted () {
+		// this.fetchUser()
+		this.navsStylePersist()
+	},
+}
 
 </script>
 
