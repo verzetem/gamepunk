@@ -16,7 +16,10 @@
 							<span class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ articleTitle(article.title) }}</span>
 	  				</a>
 	  				</div> 
-	  				<i @click="favoritePut(article.id, article.favorited)" v-bind:class="{ 'fas fa-heart': article.favorited, 'far fa-heart': !article.favorited }" style="fontSize: 1.3em; marginTop: 3%;">{{article.favorited}}</i>
+	  				<i @click="favoritePut(article.id, article.favorited)" 
+	  					v-bind:class="{ 'fas fa-heart red-heart': article.favorited, 'far fa-heart': !article.favorited }" 
+	  					style="fontSize: 1.3em; marginTop: 3%;">
+	  				</i>
 	  				<div>{{ article.date_time }}</div>	  				
 	  			</div>
 
@@ -31,19 +34,20 @@ export default {
   data() {
   	return {
   		articles: [],
-  		favorited: false,
   	}
   },
   methods : {
   	articleTitle(title) {
-			return title.slice(0,20) + "..."
+			return title.slice(0,25) + "..."
   	},
   	publisherName(id) {
 			if (id === 1) {
-				return "Destructoid"
+				return "PCGamer"
 			} else if (id === 2) {
-				return "Kotaku"
+				return "Destructoid"
 			} else if (id === 3) {
+				return "Kotaku"
+			} else if (id === 4) {
 				return "GameSpot"
 			}
   	},
@@ -55,18 +59,24 @@ export default {
   	},
   	favoritePut(id, favorited) {
   		// console.log("id and fav?", id,fav)
-  		let favArticle = favorited
-  		console.log("favoritePut", favArticle)
   		fetch("http://localhost:3030/articles/" + id, {
 			headers: {
 				"Content-Type": "application/json"
 			},
 			method: "PUT",
 			body: JSON.stringify({
-				favorited: !favArticle
+				favorited: !favorited
 			})
 		})
-			.then(this.getArticles())
+  		.then(res => res.json())
+  		.then(res => {
+  			console.log('RESPONSE!',res)
+  			let newArticles = this.articles.map(article => {
+  				if (article.id === id ) article.favorited = !favorited
+  				return article
+  			})
+  			this.articles = newArticles
+  		})
   	},
   	getArticles() {
   		fetch('http://localhost:3030/articles/')
@@ -88,6 +98,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.red-heart {
+	transition: all 0.3s;
+	&:hover {
+		color: red;
+	}
+}
 .fa-sync-alt {
 	font-size: 0.8em;
 	background-color: rgb(222,92,112);

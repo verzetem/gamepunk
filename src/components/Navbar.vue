@@ -13,7 +13,7 @@
 					</li>
 					<li>
 						<router-link to="/favorites" v-bind:class="{ 'nav-link-active': isFav, 'nav-link': !isFav }">
-							<span @click="favStyle">Favorites</span>
+							<span @click="favStyle">Favorites <i class="fas fa-heart red-heart badge1" data-badge="5"></i></span>
 						</router-link>
 					</li>
 					<li>
@@ -133,6 +133,27 @@ export default {
 </script>
 
 <style lang="scss">
+.badge1 {
+   position:relative;
+}
+.badge1[data-badge]:after {
+   content:attr(data-badge);
+   position:absolute;
+   top:-10px;
+   right:-12px;
+   font-family: 'Montserrat', sans-serif !important;
+   font-size:.6em;
+   background:#00ACFA;
+   color:white;
+   width:18px;height:18px;
+   text-align:center;
+   line-height:18px;
+   border-radius:15%;
+   box-shadow:0 0 1px #333;
+}
+.red-heart {
+	color: red;
+}
 .dropdown {
 	position: relative;
 	transition: all 0.3s;
