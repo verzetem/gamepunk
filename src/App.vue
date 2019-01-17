@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-tint">
+  <div id="app">
   	<Navbar />
     <router-view/>
   </div>
@@ -12,6 +12,20 @@ export default {
   name: 'index',
   components: {
     Navbar
+  },
+  methods: {
+    getArticles() {
+      fetch('http://localhost:3030/articles/')
+      .then(response => response.json())
+      .then(response => {
+        this.articles = response.articles
+        console.log("getArticles",response.articles)
+      })
+    },
+  },
+  mounted() {
+    console.log("app.vue mounted")
+    this.getArticles
   }
 }
 </script>
@@ -23,19 +37,10 @@ body, html, h1, h2, h3, h4, h5, h6, p {
   text-align: center;
 }
 body {
-  background-image: url('https://i.stack.imgur.com/WUUJj.png');
+  background-image: url('https://i.redd.it/qmfjuz883g7z.png');
   background-size: cover;
 	background-color: rgba(0,5,10,0.75);
 	height: 100vh;
-}
-.bg-tint {
-  z-index: 1;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  background: rgba(0, 0, 0, 0.2);    
 }
 body, html {
 	overflow: hidden !important;

@@ -13,7 +13,8 @@
 					</li>
 					<li>
 						<router-link to="/favorites" v-bind:class="{ 'nav-link-active': isFav, 'nav-link': !isFav }">
-							<span @click="favStyle">Favorites <i class="fas fa-heart red-heart badge1" data-badge="5"></i></span>
+							<span @click="favStyle">Favorites </span>
+							<!-- <i class="fas fa-heart red-heart badge1" v-bind:data-badge="favNumber"></i> -->
 						</router-link>
 					</li>
 					<li>
@@ -29,31 +30,6 @@
 						<button class="uk-button uk-button-secondary">Submit</button>
 					</form>
 				</div>
-
-				<!-- <div v-if="loggedIn" class="uk-navbar-item fl-r">
-					<div class="user-name dropdown">{{ user.username }} <span class="icon-name"><i class="fas fa-chevron-down"></i></span>
-							<ul class="drop-nav">
-								<li>
-									<router-link to="" class="drop-link">Profile</router-link>
-								</li>
-								<li>
-									<router-link to="" class="drop-link"><span @click="randoFunc">Logout </span><i class="fas fa-sign-out-alt"></i></router-link>
-								</li>
-							</ul>
-					</div>
-					<div class="avatar">
-						<img src="http://avatarbox.net/avatars/img9/pokemon_face_avatar_picture_46051.jpg" alt=""/>
-					</div>
-				</div> -->
-
-				<!-- <div v-else class=" fl-r">
-					<div class="user-name">
-						<router-link to="" class="log-in">
-							<span @click="randoFunc">LOG IN </span><i class="fas fa-sign-in-alt"></i>
-						</router-link>
-					</div>
-					<span class="icon-name"></span>
-				</div> -->
 					
 			</div>
 		</nav>
@@ -62,11 +38,12 @@
 </template>
 
 <script>
-
+import { eventBus } from '../main'
 export default {
   name: 'Navbar',
   data() {
   	return {
+  		articles: [],
   		user: [],
   		loggedIn: false,
   		isHome: true,
@@ -74,6 +51,11 @@ export default {
   		isAbout: false,
   		isContact: false
   	}
+  },
+  created() {
+		eventBus.$on('testingMethod', (articles) => {
+			this.articles = articles
+		})
   },
   methods: {
   	randoFunc() {
@@ -84,7 +66,6 @@ export default {
 			this.isFav = false
 			this.isAbout = false
 			this.isContact = false
-
   	},
   	favStyle() {
   		this.isFav = true;
@@ -122,7 +103,7 @@ export default {
   		this.isFav = false
   		this.isContact = false
   	}
-  }
+  },
 },
 	mounted () {
 		// this.fetchUser()

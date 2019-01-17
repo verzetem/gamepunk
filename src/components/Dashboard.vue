@@ -10,24 +10,25 @@
 	  					<a :href="article.article_url" target="_blank">
 					    <img v-bind:src="article.img_url" />
 					    <div class="after">
-					  	</div>
-					  	<!-- {{ article.publisher_id == 1 ? "Gamespot" : "Kotaku" }} -->
-					    <div class="after"><h6 class="card-img-text">{{ publisherName(article.publisher_id) }}</h6></div>
+					    	<h6 class="card-img-text">{{ publisherName(article.publisher_id) }}</h6>
+								<p class="date-time">{{ article.date_time }}</p>
+					    </div>
 							<span class="card-title" style="margin: 0 0.5% 0.5% 0.5%">{{ articleTitle(article.title) }}</span>
 	  				</a>
 	  				</div> 
+	  				<div class="icon-outer">
 	  				<i @click="favoritePut(article.id, article.favorited)" 
 	  					v-bind:class="{ 'fas fa-heart red-heart': article.favorited, 'far fa-heart': !article.favorited }" 
-	  					style="fontSize: 1.3em; marginTop: 3%;">
+	  					style="fontSize: 1.3em; marginTop: 4%;">
 	  				</i>
-	  				<div>{{ article.date_time }}</div>	  				
+	  				</div>	
 	  			</div>
 
 	  	</div>
 	  </div>
 	</div>
 </template>
-
+ 
 <script>
 export default {
   name: 'Dashboard',
@@ -38,7 +39,7 @@ export default {
   },
   methods : {
   	articleTitle(title) {
-			return title.slice(0,25) + "..."
+			return title.slice(0,60) + "..."
   	},
   	publisherName(id) {
 			if (id === 1) {
@@ -86,8 +87,6 @@ export default {
       	console.log("getArticles",response.articles)
       })
   	},
-
-
   },
   mounted () {
   		console.log('mounted')
@@ -98,11 +97,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.red-heart {
+.icon-outer {
+	position: absolute;
+	bottom: 0;
+	left: 44%;
+}
+.fa-heart {
+	font-size: 1.8em !important;
 	transition: all 0.3s;
-	&:hover {
+	.red-heart:hover {
 		color: red;
 	}
+}
+
+.date-time {
+	margin: 0;
+	padding: 0;
 }
 .fa-sync-alt {
 	font-size: 0.8em;
@@ -136,6 +146,7 @@ export default {
 
 }
 .article-card {
+	position: relative;
 	height: 220px;
 	width: 220px;
 	background-color: rgba(0,206,182,0.2);
@@ -170,7 +181,7 @@ export default {
 		font-weight: bold;
 		align-content: center;
 		justify-content: center;
-		margin-top: 19%;
+		margin: 19% auto 0 auto;
 		transition: all 0.3s;
 		&:hover {
 			color: rgb(0,206,182) !important;
@@ -210,9 +221,6 @@ export default {
 	color: white;
 	text-shadow:  -2px 2px black;
 	font-weight: bold;
-}
-.invisible-text {
-	color: rgb(65,68,71) !important;
 }
 
 </style>
